@@ -1,0 +1,47 @@
+div
+  div(plug="widget")
+    div(ld="hint") remains
+    //-.font-weight-bold(style="width:9em;font-size:1.15em;font-family:monospace",ld="count") 00:00:00
+
+    .countdown.default
+      div(ld="day",style="grid-column:1 / span 7") 0
+      div(t) D
+      div(ld="digit",data-digit="0") 0
+      div(ld="digit",data-digit="1") 0
+      div.sm :
+      div(ld="digit",data-digit="2") 0
+      div(ld="digit",data-digit="3") 0
+      div.sm :
+      div(ld="digit",data-digit="4") 0
+      div(ld="digit",data-digit="5") 0
+
+  style(type="text/css"): :stylus
+    .countdown
+      display: grid
+      grid-template: 1fr 1fr / 1fr 1fr 0.3fr 1fr 1fr 0.3fr 1fr 1fr
+      gap: 3px
+    .countdown > div
+      display: flex
+      align-items: center
+      justify-content: center
+      padding: .5em .25em
+      border-radius: .15em
+    .countdown > div:first-child
+      justify-content: end
+      padding-right: 1em
+      letter-spacing: .25em
+    .countdown div.sm
+      padding: 0
+      background: none
+    .countdown.default div
+      color: #444
+      background: #f1f2f3
+      font-weight: 700
+      border: 1px solid #d1d2d3
+    .countdown.default div.sm
+      color: #000
+      background: none
+      border: 0
+      box-shadow: none
+
+  script(type="@plotdb/block"): include:lsc index.ls
