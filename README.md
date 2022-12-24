@@ -1,1 +1,5 @@
-# countdown
+# @makeform/countdown
+
+## License
+
+MIT
