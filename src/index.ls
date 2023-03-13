@@ -20,13 +20,13 @@ module.exports =
   init: (opt) -> opt.pubsub.fire \init, mod: mod(opt)
 
 mod = ({root, i18n, ctx, data}) ->
+  {ldview, dayjs} = ctx
   mod =
     init: ->
-      {ldview, dayjs} = ctx
       @i18n = i18n
       @info = {}
       @data = data or {}
-      @deadline = (if @data.config.deadline => dayjs(@data.config.deadline) else dayjs!).valueOf!
+      @deadline = (if (@data.config or {}).deadline => dayjs(that) else dayjs!).valueOf!
       @view = view = new ldview do
         root: root, ctx: @
         text:
@@ -39,6 +39,9 @@ mod = ({root, i18n, ctx, data}) ->
 
       @status 0
       mod.tick.apply @
+
+    render: ->
+      @deadline = (if (@_meta.config or {}).deadline => dayjs(that) else dayjs!).valueOf!
 
     tick: ->
       requestAnimationFrame ~> mod.tick.apply @
