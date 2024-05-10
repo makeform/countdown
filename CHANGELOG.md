@@ -1,5 +1,10 @@
 # Change Logs
 
+## v1.0.3
+
+ - tweak datetime flipcard size
+
+
 ## v1.0.2
 
  - explicitly support no-deadline expression
