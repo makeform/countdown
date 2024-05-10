@@ -1,9 +1,7 @@
 div
   div(plug="widget")
     div(ld="hint") remains
-    //-.font-weight-bold(style="width:9em;font-size:1.15em;font-family:monospace",ld="count") 00:00:00
-
-    .countdown.default
+    .countdown.default(ld="flipclock")
       div(ld="day",style="grid-column:1 / span 7") 0
       div(t) D
       div(ld="digit",data-digit="0") 0
@@ -16,6 +14,9 @@ div
       div(ld="digit",data-digit="5") 0
 
   style(type="text/css"): :stylus
+    .countdown.disabled
+      filter: saturate(0.1) contrast(0.9) brightness(1)
+      opacity: 0.5
     .countdown
       display: grid
       grid-template: 1fr 1fr / 1fr 1fr 0.3fr 1fr 1fr 0.3fr 1fr 1fr

@@ -9,12 +9,14 @@ module.exports =
       "en":
         "closed": "closed"
         "remains": "remains"
+        "no deadline": "No Deadline"
         "day(s)": "day(s)"
         "D": "D"
 
       "zh-TW":
         "closed": "徵件已截止"
         "remains": "剩餘時間"
+        "no deadline": "無截止時間"
         "day(s)": "天"
         "D": "天"
   init: (opt) -> opt.pubsub.fire \init, mod: mod(opt)
@@ -25,10 +27,14 @@ mod = ({root, i18n, ctx, data}) ->
     init: ->
       @i18n = i18n
       @info = {}
-      @data = data or {}
-      @deadline = (if (@data.config or {}).deadline => dayjs(that) else dayjs!).valueOf!
+      @update-deadline = ->
+        @deadline = (if (@_meta.config or {}).deadline => dayjs(that) else dayjs!).valueOf!
+        @has-deadline = !!(@_meta.config or {}).deadline
+      @update-deadline!
       @view = view = new ldview do
         root: root, ctx: @
+        handler:
+          flipclock: ({node}) ~> node.classList.toggle \disabled, !@has-deadline
         text:
           count: ({ctx}) ~> ctx.info.count
           hint: ({ctx}) ~> ctx.info.hint
@@ -40,8 +46,7 @@ mod = ({root, i18n, ctx, data}) ->
       @status 0
       mod.tick.apply @
 
-    render: ->
-      @deadline = (if (@_meta.config or {}).deadline => dayjs(that) else dayjs!).valueOf!
+    render: -> @update-deadline!
 
     tick: ->
       requestAnimationFrame ~> mod.tick.apply @
@@ -64,7 +69,7 @@ mod = ({root, i18n, ctx, data}) ->
       ].join('')
       @info =
         count: str
-        hint: @i18n.t(if remains <= 0 => "closed" else "remains")
+        hint: @i18n.t(if !@has-deadline => 'no deadline' else if remains <= 0 => "closed" else "remains")
         hms: hms
         day: d or 0
       s = if remains <= 0 => 2 else 0
