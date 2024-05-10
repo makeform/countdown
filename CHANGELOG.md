@@ -1,5 +1,10 @@
 # Change Logs
 
+## v1.0.4
+
+ - fix bug: status for no-deadline should be 0, instead of 2
+
+
 ## v1.0.3
 
  - tweak datetime flipcard size

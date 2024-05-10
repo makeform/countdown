@@ -72,7 +72,7 @@ mod = ({root, i18n, ctx, data}) ->
         hint: @i18n.t(if !@has-deadline => 'no deadline' else if remains <= 0 => "closed" else "remains")
         hms: hms
         day: d or 0
-      s = if remains <= 0 => 2 else 0
+      s = if !@has-deadline => 0 else if remains <= 0 => 2 else 0
       if @status! != s => @status s
       @view.render!
       @_last-render-time = now - (now % 1000)
