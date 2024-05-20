@@ -14,7 +14,7 @@ module.exports =
         "D": "D"
 
       "zh-TW":
-        "closed": "徵件已截止"
+        "closed": "非開放時間"
         "remains": "剩餘時間"
         "no deadline": "無截止時間"
         "day(s)": "天"
@@ -34,7 +34,8 @@ mod = ({root, i18n, ctx, data}) ->
       @view = view = new ldview do
         root: root, ctx: @
         handler:
-          flipclock: ({node}) ~> node.classList.toggle \disabled, !@has-deadline
+          flipclock: ({node}) ~>
+            node.classList.toggle \disabled, (!@has-deadline or (@status! == 2))
         text:
           count: ({ctx}) ~> ctx.info.count
           hint: ({ctx}) ~> ctx.info.hint
